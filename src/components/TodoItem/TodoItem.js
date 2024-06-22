@@ -1,11 +1,13 @@
 import './TodoItem.css'
+import { CheckIcon } from '../Icons/CheckIcon'
+import { DeleteIcon } from '../Icons/DeleteIcon'
 
 function TodoItems({content, completed, check, pop }) {
     return (
         <li className="TodoItem">
-            <span className={`Icon Icon-check ${completed && "Icon-check--active"}`} onClick={check} >V</span>
+            <CheckIcon  completed={completed} onCheck={check}  />
             <p className={`TodoItem-p ${completed && "TodoItem-p--complete"}`}>{content}</p>
-            <span className="Icon Icon-delete" onClick={pop}>X</span>
+            <DeleteIcon onDelete={pop} />
         </li>
     );
 }
