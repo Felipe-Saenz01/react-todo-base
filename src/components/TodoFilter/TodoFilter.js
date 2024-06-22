@@ -1,8 +1,13 @@
 import './TodoFilter.css'
 
-function TodoFilter(){
-    return(
-        <input className="TodoFilter" placeholder="Filtro TODO" />
+function TodoFilter({filter, setFilter}) {
+
+    const handleFilter = (event) => {
+        setFilter(event.target.value)
+    }
+
+    return (
+        <input className="TodoFilter" value={filter} placeholder="Filtro TODO" onChange={handleFilter} />
     )
 }
 

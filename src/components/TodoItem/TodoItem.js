@@ -3,9 +3,9 @@ import './TodoItem.css'
 function TodoItems({ content, completed }) {
     return (
         <li className="TodoItem">
-            <spam className={`Icon Icon-check ${completed && "Icon-check--active"}`}>V</spam>
+            <span className={`Icon Icon-check ${completed && "Icon-check--active"}`}>V</span>
             <p className={`TodoItem-p ${completed && "TodoItem-p--complete"}`}>{content}</p>
-            <spam className="Icon Icon-delete">X</spam>
+            <span className="Icon Icon-delete">X</span>
         </li>
     );
 }

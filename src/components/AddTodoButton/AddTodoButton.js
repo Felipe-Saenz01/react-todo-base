@@ -1,9 +1,15 @@
 import './AddTodoButton.css'
 
 function AddTodoButton() {
-    return(
-      <button className="AddTodoButton" > + </button>
-    );
+
+  const handleClick = (event) =>{
+    console.log('Add Todo click!')
+    console.log(event.target)
+  }
+
+  return (
+    <button className="AddTodoButton" onClick={handleClick} > + </button>
+  );
 }
 
 export { AddTodoButton }
