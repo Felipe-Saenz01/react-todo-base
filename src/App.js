@@ -12,7 +12,7 @@ function App() {
   const defaultTodos = [
     {id: 0, text: 'Hola bom dia', completed: true},
     {id: 1, text: 'Hello World', completed: false},
-    {id: 3, text: 'Evilchuck', completed: false}
+    {id: 2, text: 'Evilchuck', completed: false}
   ]
   // estado para los TODOS
   const [todos, setTodos] = useState(defaultTodos)
@@ -37,6 +37,26 @@ function App() {
     return lowerFilter.includes(lowerText)
   })
 
+  //funcion para completar TODOS
+  const checkTodo = (id) => {
+    const newTodos = [...todos]
+    const todoIndex = newTodos.findIndex(
+      (todo) => todo.id === id
+    )
+    newTodos[todoIndex].completed = !newTodos[todoIndex].completed
+    setTodos(newTodos)
+  }
+  
+  //funcion para eliminar TODOS
+  const deleteTodo = (id) => {
+    const newTodos = [...todos]
+    const todoIndex = newTodos.findIndex(
+      (todo) => todo.id === id
+    )
+    newTodos.splice(todoIndex, 1)
+    setTodos(newTodos)
+  }
+
   
 
   return (
@@ -45,7 +65,13 @@ function App() {
       <TodoFilter filter={filter} setFilter={setFilter} />
       <TodoList>
         {todosFiltered.map(todo =>(
-          <TodoItems key={todo.id} content={todo.text} completed={todo.completed} />
+          <TodoItems 
+            key={todo.id}
+            content={todo.text} 
+            completed={todo.completed}
+            check={() => checkTodo(todo.id)}
+            pop={() => deleteTodo(todo.id)}  
+          />
         ))}
       </TodoList>
       <AddTodoButton />
