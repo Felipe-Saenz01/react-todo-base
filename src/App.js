@@ -8,14 +8,13 @@ import { useState } from "react";
 
 
 function App() {
-  // array default para mostrar TODOS de prueba
-  const defaultTodos = [
-    {id: 0, text: 'Hola bom dia', completed: true},
-    {id: 1, text: 'Hello World', completed: false},
-    {id: 2, text: 'Evilchuck', completed: false}
-  ]
+
   // estado para los TODOS
-  const [todos, setTodos] = useState(defaultTodos)
+  const [todos, setTodos] = useState(() => {
+    // Busca el localStorage llamado React-todo, si no existe devuelve un array vacio
+    return JSON.parse(localStorage.getItem('React-Todo')) || []
+  })
+
   // Variable que almacenará la cantidad de los TODOS que estan completados
   const completedTodos = todos.filter(todo => todo.completed).length
   // Variable que almacenará la cantidad de TODOS sin nigun filtro
@@ -37,6 +36,12 @@ function App() {
     return lowerFilter.includes(lowerText)
   })
 
+  // funcion para guardar los cambios a los Todos tanto en el useState y LocalStorage
+  const saveTodos = (newTodos) => {
+    localStorage.setItem('React-Todo', JSON.stringify(newTodos))
+    setTodos(newTodos)
+  }
+
   //funcion para completar TODOS
   const checkTodo = (id) => {
     const newTodos = [...todos]
@@ -44,7 +49,7 @@ function App() {
       (todo) => todo.id === id
     )
     newTodos[todoIndex].completed = !newTodos[todoIndex].completed
-    setTodos(newTodos)
+    saveTodos(newTodos)
   }
   
   //funcion para eliminar TODOS
@@ -54,7 +59,7 @@ function App() {
       (todo) => todo.id === id
     )
     newTodos.splice(todoIndex, 1)
-    setTodos(newTodos)
+    saveTodos(newTodos)
   }
 
   
