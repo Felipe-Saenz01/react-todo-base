@@ -1,6 +1,10 @@
+import { useContext } from 'react'
 import './TodoFilter.css'
+import { TodoContext } from '../../context/TodoContext'
 
-function TodoFilter({filter, setFilter}) {
+function TodoFilter() {
+
+    const {filter, setFilter} = useContext(TodoContext)
 
     const handleFilter = (event) => {
         setFilter(event.target.value)

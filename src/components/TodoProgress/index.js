@@ -1,11 +1,15 @@
+import { useContext } from 'react'
 import './TodoProgress.css'
+import { TodoContext } from '../../context/TodoContext'
 
-function TodoProgress({current, total}){
+function TodoProgress(){
+    const {completedTodos, totalTodos } = useContext(TodoContext)
+
     let text
-    if (total >= 1 && current === total) {
+    if (totalTodos >= 1 && completedTodos === totalTodos) {
         text = "FELICIDADES!!! ningun TODO pendiente"
     }else{
-        text = "Has completado "+current+" de "+total+" TODOS"
+        text = "Has completado "+completedTodos+" de "+totalTodos+" TODOS"
     }
 
     return(

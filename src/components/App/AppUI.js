@@ -7,24 +7,26 @@ import './App.css';
 import { TodosEmpty } from "../TodosEmpty";
 import { TodosError } from "../TodosError";
 import { TodosLoading } from "../TodosLoading";
+import { TodoContext } from "../../context/TodoContext";
+import { useContext } from "react";
 
-function AppUI({
-    loading,
-    error,
-    completedTodos,
-    totalTodos,
-    filter,
-    setFilter,
-    todosFiltered,
-    checkTodo,
-    deleteTodo
-}) {
+
+function AppUI() {
+
+    const {
+        loading,
+        error,
+        todosFiltered,
+        checkTodo,
+        deleteTodo
+    } = useContext(TodoContext)
+
     return (
         <>
-            <TodoProgress current={completedTodos} total={totalTodos} />
-            <TodoFilter filter={filter} setFilter={setFilter} />
+            <TodoProgress />
+            <TodoFilter />
             <TodoList>
-                {loading && 
+                {loading &&
                     <>
                         <TodosLoading />
                         <TodosLoading />
