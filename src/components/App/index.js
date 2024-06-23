@@ -1,19 +1,11 @@
-import { TodoProgress } from "./components/TodoProgress/TodoProgress";
-import { TodoFilter } from "./components/TodoFilter/TodoFilter";
-import { TodoList } from "./components/TodoList/TodoList";
-import { TodoItems } from "./components/TodoItem/TodoItem";
-import { AddTodoButton } from "./components/AddTodoButton/AddTodoButton";
-import './App.css';
-import { useState } from "react";
-
+import { useLocalStorage } from './useLocalStorage';
+import { useState } from 'react'
+import { AppUI } from './AppUI';
 
 function App() {
 
   // estado para los TODOS
-  const [todos, setTodos] = useState(() => {
-    // Busca el localStorage llamado React-todo, si no existe devuelve un array vacio
-    return JSON.parse(localStorage.getItem('React-Todo')) || []
-  })
+  const [todos, setTodos] = useLocalStorage('React-Todo', []);
 
   // Variable que almacenará la cantidad de los TODOS que estan completados
   const completedTodos = todos.filter(todo => todo.completed).length
@@ -36,11 +28,6 @@ function App() {
     return lowerFilter.includes(lowerText)
   })
 
-  // funcion para guardar los cambios a los Todos tanto en el useState y LocalStorage
-  const saveTodos = (newTodos) => {
-    localStorage.setItem('React-Todo', JSON.stringify(newTodos))
-    setTodos(newTodos)
-  }
 
   //funcion para completar TODOS
   const checkTodo = (id) => {
@@ -49,7 +36,7 @@ function App() {
       (todo) => todo.id === id
     )
     newTodos[todoIndex].completed = !newTodos[todoIndex].completed
-    saveTodos(newTodos)
+    setTodos(newTodos)
   }
   
   //funcion para eliminar TODOS
@@ -59,28 +46,19 @@ function App() {
       (todo) => todo.id === id
     )
     newTodos.splice(todoIndex, 1)
-    saveTodos(newTodos)
+    setTodos(newTodos)
   }
 
-  
-
   return (
-    <>
-      <TodoProgress current={completedTodos} total={totalTodos} />
-      <TodoFilter filter={filter} setFilter={setFilter} />
-      <TodoList>
-        {todosFiltered.map(todo =>(
-          <TodoItems 
-            key={todo.id}
-            content={todo.text} 
-            completed={todo.completed}
-            check={() => checkTodo(todo.id)}
-            pop={() => deleteTodo(todo.id)}  
-          />
-        ))}
-      </TodoList>
-      <AddTodoButton />
-    </>
+    <AppUI 
+      completedTodos={completedTodos}
+      totalTodos={totalTodos}
+      filter={filter}
+      setFilter= {setFilter}
+      todosFiltered= {todosFiltered}
+      checkTodo={checkTodo}
+      deleteTodo={deleteTodo}
+    />
   );
 }
 
