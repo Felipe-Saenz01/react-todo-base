@@ -4,6 +4,9 @@ import { TodoList } from "../TodoList";
 import { TodoItems } from "../TodoItem";
 import { AddTodoButton } from "../AddTodoButton";
 import './App.css';
+import { TodosEmpty } from "../TodosEmpty";
+import { TodosError } from "../TodosError";
+import { TodosLoading } from "../TodosLoading";
 
 function AppUI({
     loading,
@@ -21,9 +24,15 @@ function AppUI({
             <TodoProgress current={completedTodos} total={totalTodos} />
             <TodoFilter filter={filter} setFilter={setFilter} />
             <TodoList>
-                {loading && <p>Cargando TODOS...</p>}
-                {error && <p>Ocurrió un error :c</p>}
-                {(!loading && todosFiltered.length === 0) && <p>Crea tu primer TODO!!</p>}
+                {loading && 
+                    <>
+                        <TodosLoading />
+                        <TodosLoading />
+                        <TodosLoading />
+                    </>
+                }
+                {error && <TodosError />}
+                {(!loading && todosFiltered.length === 0) && <TodosEmpty />}
                 {todosFiltered.map(todo => (
                     <TodoItems
                         key={todo.id}
