@@ -5,7 +5,7 @@ import { AppUI } from './AppUI';
 function App() {
 
   // estado para los TODOS
-  const [todos, setTodos] = useLocalStorage('React-Todo', []);
+  const {item: todos, saveTodos: setTodos, loading, error} = useLocalStorage('React-Todo', []);
 
   // Variable que almacenará la cantidad de los TODOS que estan completados
   const completedTodos = todos.filter(todo => todo.completed).length
@@ -50,7 +50,9 @@ function App() {
   }
 
   return (
-    <AppUI 
+    <AppUI
+      loading={loading}
+      error={error}
       completedTodos={completedTodos}
       totalTodos={totalTodos}
       filter={filter}

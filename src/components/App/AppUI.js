@@ -6,6 +6,8 @@ import { AddTodoButton } from "../AddTodoButton";
 import './App.css';
 
 function AppUI({
+    loading,
+    error,
     completedTodos,
     totalTodos,
     filter,
@@ -19,6 +21,9 @@ function AppUI({
             <TodoProgress current={completedTodos} total={totalTodos} />
             <TodoFilter filter={filter} setFilter={setFilter} />
             <TodoList>
+                {loading && <p>Cargando TODOS...</p>}
+                {error && <p>Ocurrió un error :c</p>}
+                {(!loading && todosFiltered.length === 0) && <p>Crea tu primer TODO!!</p>}
                 {todosFiltered.map(todo => (
                     <TodoItems
                         key={todo.id}
