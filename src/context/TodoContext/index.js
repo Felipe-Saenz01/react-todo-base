@@ -8,6 +8,9 @@ function TodoProvider({ children }) {
     // estado para los TODOS
     const { item: todos, saveTodos: setTodos, loading, error } = useLocalStorage('React-Todo', []);
 
+    //Estados para el modal
+    const [openModal, setOpenModal] = useState(true)
+
     // Variable que almacenará la cantidad de los TODOS que estan completados
     const completedTodos = todos.filter(todo => todo.completed).length
     // Variable que almacenará la cantidad de TODOS sin nigun filtro
@@ -61,7 +64,9 @@ function TodoProvider({ children }) {
                 setFilter,
                 todosFiltered,
                 checkTodo,
-                deleteTodo
+                deleteTodo,
+                openModal, 
+                setOpenModal
             }}
         >
             {children}
