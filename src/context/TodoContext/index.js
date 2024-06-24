@@ -9,7 +9,7 @@ function TodoProvider({ children }) {
     const { item: todos, saveTodos: setTodos, loading, error } = useLocalStorage('React-Todo', []);
 
     //Estados para el modal
-    const [openModal, setOpenModal] = useState(true)
+    const [openModal, setOpenModal] = useState(false)
 
     // Variable que almacenará la cantidad de los TODOS que estan completados
     const completedTodos = todos.filter(todo => todo.completed).length
@@ -32,6 +32,27 @@ function TodoProvider({ children }) {
         return lowerFilter.includes(lowerText)
     })
 
+
+    //funcion para completar TODOS
+    const addTodo = (text) => {
+        const newTodos = [...todos]
+        if (newTodos.length >= 1) {
+            const todoIndex = (newTodos.length - 1)
+            const newIndex = (newTodos[todoIndex].id + 1)
+            newTodos.push({
+                id: newIndex,
+                text: text,
+                completed: false
+            })
+        }else{
+            newTodos.push({
+                id: 0,
+                text: text,
+                completed: false
+            })
+        }
+        setTodos(newTodos)
+    }
 
     //funcion para completar TODOS
     const checkTodo = (id) => {
@@ -66,7 +87,8 @@ function TodoProvider({ children }) {
                 checkTodo,
                 deleteTodo,
                 openModal, 
-                setOpenModal
+                setOpenModal,
+                addTodo
             }}
         >
             {children}

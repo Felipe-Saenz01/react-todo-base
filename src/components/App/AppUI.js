@@ -7,10 +7,12 @@ import './App.css';
 import { TodosEmpty } from "../TodosEmpty";
 import { TodosError } from "../TodosError";
 import { TodosLoading } from "../TodosLoading";
-import { TodoContext } from "../../context/TodoContext";
 import { useContext } from "react";
 import { Modal } from "../Modal";
+import { TodoForm } from "../TodoForm";
 
+
+import { TodoContext } from "../../context/TodoContext";
 
 function AppUI() {
 
@@ -51,7 +53,7 @@ function AppUI() {
 
             {openModal && (
                 <Modal>
-                    <p>Using ReactPortal</p>
+                    <TodoForm />
                 </Modal>
             )}
         </>
